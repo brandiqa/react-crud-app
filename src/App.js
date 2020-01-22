@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { NavLink, Route } from 'react-router-dom';
+import ContactListPage from './pages/contact-list-page';
+import ContactFormPage from './pages/contact-form-page';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <nav className="navbar">
+          <div className="navbar-brand">
+            React Crud Demo
+          </div>
+          <div className="navbar-menu">
+            <div className="navbar-start">
+              <Link class="navbar-item" to="/">Home</Link>
+            </div>
+          </div>
+        </nav>
+        <div className="container">
+          <div className="ui two item menu">
+            <NavLink className="item" activeClassName="active" exact to="/">
+              Contacts List
+            </NavLink>
+            <NavLink className="item" activeClassName="active" exact to="/contacts/new">
+              Add Contact
+            </NavLink>
+          </div>
+          <Route exact path="/" component={ContactListPage}/>
+          <Route path="/contacts/new" component={ContactFormPage}/>
+          <Route path="/contacts/edit/:_id" component={ContactFormPage}/>
+        </div>
+      </div>
+    );
+  }
 }
-
 export default App;
