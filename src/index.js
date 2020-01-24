@@ -6,12 +6,16 @@ import * as serviceWorker from './serviceWorker';
 import 'fomantic-ui-css/semantic.min.css';
 import './index.css';
 
+import { ContactContextProvider } from './context/contact-context';
+
 ReactDOM.render(
+  <ContactContextProvider>
     <BrowserRouter>
       <App />
-    </BrowserRouter>,
-    document.getElementById('root')
-  );
+    </BrowserRouter>
+  </ContactContextProvider>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
