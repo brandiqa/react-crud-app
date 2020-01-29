@@ -1,18 +1,55 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Grid, Button } from "semantic-ui-react";
 import { useForm } from "react-hook-form";
 import classnames from "classnames";
+import axios from "axios";
+import { Redirect } from "react-router";
 import { ContactContext } from "../context/contact-context";
+import FlashMessage from "./flash-message";
 
 export default function ContactForm() {
-  const [state] = useContext(ContactContext);
+  const [state, dispatch] = useContext(ContactContext);
   const { register, errors, handleSubmit } = useForm();
-  const onSubmit = data => console.log(data);
+  const [redirect, setRedirect] = useState(false)
+
+  const flashErrorMessage = error => {
+    const err = error.response ? error.response.data : error;
+    dispatch({
+      type: "FLASH_MESSAGE",
+      payload: {
+        type: "fail",
+        title: err.name,
+        content: err.message
+      }
+    });
+  }
+
+  const createContact = async contact => {
+    try {
+      const response = await axios.post("http://localhost:3030/contacts", contact);
+      dispatch({
+        type: "CREATE_CONTACT",
+        payload: response.data
+      });
+      setRedirect(true);
+    } catch (error) {
+      flashErrorMessage(error)
+    }
+  };
+
+  const onSubmit = async contact => {
+    await createContact(contact);
+  };
+
+  if (redirect) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <Grid centered columns={2}>
       <Grid.Column>
         <h1 style={{ marginTop: "1em" }}>Add New Contact</h1>
+        {state.message.content && <FlashMessage message={state.message} />}
         <Form onSubmit={handleSubmit(onSubmit)} loading={state.loading}>
           <Form.Group widths="equal">
             <Form.Field className={classnames({ error: errors.name })}>

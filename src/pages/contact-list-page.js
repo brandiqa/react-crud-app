@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
-import ContactList from '../components/contact-list';
-import FlashMessage from '../components/flash-message';
-import { ContactContext } from '../context/contact-context';
-import axios from 'axios';
+import React, { useContext, useEffect } from "react";
+import ContactList from "../components/contact-list";
+import FlashMessage from "../components/flash-message";
+import { ContactContext } from "../context/contact-context";
+import axios from "axios";
 
 export default function ContactListPage() {
   const [state, dispatch] = useContext(ContactContext);
@@ -16,19 +16,18 @@ export default function ContactListPage() {
           payload: response.data.data || response.data // in case pagination is disabled
         });
       } catch (error) {
-        const message = {
-          type: "fail",
-          title: error.name,
-          content: error.message
-        };
-         dispatch({
-           type: "FLASH_MESSAGE",
-           payload: message
-         });
+        dispatch({
+          type: "FLASH_MESSAGE",
+          payload: {
+            type: "fail",
+            title: error.name,
+            content: error.message
+          }
+        });
       }
-    }
+    };
     fetchData();
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
     <div>
