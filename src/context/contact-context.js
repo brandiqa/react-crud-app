@@ -3,26 +3,44 @@ import React, {
   createContext
 } from 'react';
 
-export const ContactContext = createContext()
+export const ContactContext = createContext();
+
+const initialState = {
+  contacts: [],
+  contact: null, // selected or new
+  loading: false,
+  message: {} // { type: 'success|fail', title:'Info|Error' content:'lorem ipsum'}
+};
 
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_CONTACTS': {
       return {
         ...state,
-        contacts: action.payload
+        contacts: action.payload,
+        message: {} // reset flash message
       }
     }
-    default:
-      throw new Error()
-  }
-}
 
-const initialState = {
-  contacts: [],
-  contact: null, // selected or new
-  loading: false,
-  errors: {}
+    case 'FLASH_MESSAGE': {
+      return {
+        ...state,
+        message: action.payload
+      }
+    }
+
+    case 'CREATE_CONTACT': {
+      return {
+        ...state,
+        contacts: [...state.contacts, action.payload.data],
+        message: {},
+        loading: false
+      };
+    }
+
+    default:
+      throw new Error();
+  }
 }
 
 export const ContactContextProvider = (props) => {
