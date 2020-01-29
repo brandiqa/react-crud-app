@@ -5,24 +5,12 @@ import classnames from "classnames";
 import axios from "axios";
 import { Redirect } from "react-router";
 import { ContactContext } from "../context/contact-context";
-import FlashMessage from "./flash-message";
+import FlashMessage, { flashErrorMessage } from "./flash-message";
 
 export default function ContactForm() {
   const [state, dispatch] = useContext(ContactContext);
   const { register, errors, handleSubmit } = useForm();
   const [redirect, setRedirect] = useState(false)
-
-  const flashErrorMessage = error => {
-    const err = error.response ? error.response.data : error;
-    dispatch({
-      type: "FLASH_MESSAGE",
-      payload: {
-        type: "fail",
-        title: err.name,
-        content: err.message
-      }
-    });
-  }
 
   const createContact = async contact => {
     try {
@@ -33,7 +21,7 @@ export default function ContactForm() {
       });
       setRedirect(true);
     } catch (error) {
-      flashErrorMessage(error)
+      flashErrorMessage(dispatch, error)
     }
   };
 

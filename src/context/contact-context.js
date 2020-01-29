@@ -17,8 +17,7 @@ function reducer(state, action) {
     case 'FETCH_CONTACTS': {
       return {
         ...state,
-        contacts: action.payload,
-        message: {} // reset flash message
+        contacts: action.payload
       }
     }
 
