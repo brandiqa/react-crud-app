@@ -7,14 +7,16 @@ import { Redirect } from "react-router";
 import { ContactContext } from "../context/contact-context";
 import FlashMessage, { flashErrorMessage } from "./flash-message";
 
-export default function ContactForm() {
+export default function ContactForm({contact}) {
   const [state, dispatch] = useContext(ContactContext);
-  const { register, errors, handleSubmit } = useForm();
-  const [redirect, setRedirect] = useState(false)
+  const { register, errors, handleSubmit } = useForm({
+    defaultValues: contact
+  });
+  const [redirect, setRedirect] = useState(false);
 
-  const createContact = async contact => {
+  const createContact = async data => {
     try {
-      const response = await axios.post("http://localhost:3030/contacts", contact);
+      const response = await axios.post("http://localhost:3030/contacts", data);
       dispatch({
         type: "CREATE_CONTACT",
         payload: response.data
@@ -25,8 +27,29 @@ export default function ContactForm() {
     }
   };
 
-  const onSubmit = async contact => {
-    await createContact(contact);
+  const updateContact = async data => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:3030/contacts/${contact._id}`,
+        data
+      );
+      dispatch({
+        type: "UPDATE_CONTACT",
+        payload: response.data
+      });
+      setRedirect(true);
+    } catch (error) {
+      flashErrorMessage(dispatch, error);
+    }
+  };
+
+  const onSubmit = async data => {
+    if(contact._id) {
+      await updateContact(data);
+    }
+    else{
+      await createContact(data);
+    }
   };
 
   if (redirect) {
@@ -36,7 +59,9 @@ export default function ContactForm() {
   return (
     <Grid centered columns={2}>
       <Grid.Column>
-        <h1 style={{ marginTop: "1em" }}>Add New Contact</h1>
+        <h1 style={{ marginTop: "1em" }}>
+          {contact._id ? "Edit Contact" : "Add New Contact"}
+        </h1>
         {state.message.content && <FlashMessage message={state.message} />}
         <Form onSubmit={handleSubmit(onSubmit)} loading={state.loading}>
           <Form.Group widths="equal">

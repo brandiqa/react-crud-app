@@ -21,8 +21,7 @@ module.exports = function (app) {
     },
     email : {
       type: mongooseClient.SchemaTypes.Email,
-      required: [true, 'Email is required'],
-      unique: [true, 'Duplicate not allowed']
+      required: [true, 'Email is required']
     },
     phone : {
       type: String,

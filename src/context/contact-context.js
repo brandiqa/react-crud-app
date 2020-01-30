@@ -7,28 +7,28 @@ export const ContactContext = createContext();
 
 const initialState = {
   contacts: [],
-  contact: null, // selected or new
-  loading: false,
+  contact: {}, // selected or new
   message: {} // { type: 'success|fail', title:'Info|Error' content:'lorem ipsum'}
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'FETCH_CONTACTS': {
+    case "FETCH_CONTACTS": {
       return {
         ...state,
-        contacts: action.payload
-      }
+        contacts: action.payload,
+        contact: {}
+      };
     }
 
-    case 'FLASH_MESSAGE': {
+    case "FLASH_MESSAGE": {
       return {
         ...state,
         message: action.payload
-      }
+      };
     }
 
-    case 'CREATE_CONTACT': {
+    case "CREATE_CONTACT": {
       return {
         ...state,
         contacts: [...state.contacts, action.payload],
@@ -36,8 +36,30 @@ function reducer(state, action) {
           type: "success",
           title: "Success",
           content: "New Contact created!"
-        },
-        loading: false
+        }
+      };
+    }
+
+    case "FETCH_CONTACT": {
+      return {
+        ...state,
+        contact: action.payload,
+        message: {}
+      };
+    }
+
+    case "UPDATE_CONTACT": {
+      const contact = action.payload;
+      return {
+        ...state,
+        contacts: state.contacts.map(item =>
+          item._id === contact._id ? contact : item
+        ),
+        message: {
+          type: "success",
+          title: "Update Successful",
+          content: `Contact "${contact.email}" has been updated!`
+        }
       };
     }
 
