@@ -3,7 +3,6 @@
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
 require('mongoose-type-email');
-const uniqueValidator = require('mongoose-unique-validator');
 
 module.exports = function (app) {
   const modelName = 'contacts';
@@ -23,7 +22,6 @@ module.exports = function (app) {
     email : {
       type: mongooseClient.SchemaTypes.Email,
       required: [true, 'Email is required'],
-      index: true,
       unique: [true, 'Duplicate not allowed']
     },
     phone : {
@@ -39,9 +37,6 @@ module.exports = function (app) {
   }, {
     timestamps: true
   });
-
-  // Apply the uniqueValidator plugin to contact schema.
-  schema.plugin(uniqueValidator);
 
   // This is necessary to avoid model compilation errors in watch mode
   // see https://mongoosejs.com/docs/api/connection.html#connection_Connection-deleteModel
