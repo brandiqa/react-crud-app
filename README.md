@@ -1,68 +1,60 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# REACT CRUD EXAMPLE - modern version
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+This a basic crud react-hooks-context-feathers application for managing contacts. It currently uses MongoDB for the database and Feathers for the REST API server.
 
-### `yarn start`
+See tutorial: https://www.sitepoint.com/crud-app-react-redux-feathersjs/
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This is an updated version of the older project that is now in legacy mode: https://github.com/brandiqa/redux-crud-app.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+##  How to install
 
-### `yarn test`
+The following instructions assume you have installed Yarn.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone git@github.com:brandiqa/react-crud-example.git
+cd react-crud-example
 
-### `yarn build`
+# Install frontend dependencies
+yarn install
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Install backend dependencies
+cd backend
+yarn install
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## How to run
+Ensure you have mongodb installed in your system and that it is running.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Start Feathers backend server
+Start the backend server first:
 
-### `yarn eject`
+```bash
+cd react-crud-example/backend
+yarn start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This will launch the backend server at localhost:3030. If all is working well, you should be able to access the url http://localhost:3030/contacts from your Browser, Postman or Insomnia.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Start `create-react-app` server
+Open a separate terminal to start the client:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+cd react-crud-example
+yarn start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Your default web browser will be launched automatically with the url http://localhost:3000
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The MIT License (MIT)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Copyright (c) 2020 SitePoint
 
-### Code Splitting
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
